@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="eventattendancejs.client/eventattendancejs.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="EventAttendanceJS.Server/EventAttendanceJS.Server.csproj" />
+</Solution>

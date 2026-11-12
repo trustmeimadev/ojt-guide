@@ -1,0 +1,6 @@
+@EventAttendanceJS.Server_HostAddress = http://localhost:5159
+
+GET {{EventAttendanceJS.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
