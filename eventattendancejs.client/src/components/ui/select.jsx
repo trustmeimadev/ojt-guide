@@ -5,7 +5,7 @@ import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
 const Select = SelectPrimitive.Root
 
-function SelectGroup({
+function SelectGroup({ // Grouping related select items together, providing a label for the group.
   className,
   ...props
 }) {
@@ -18,7 +18,7 @@ function SelectGroup({
   )
 }
 
-function SelectValue({
+function SelectValue({ //SelectValue component is responsible for displaying the selected value in the select dropdown.
   className,
   ...props
 }) {
@@ -31,7 +31,7 @@ function SelectValue({
   )
 }
 
-function SelectTrigger({
+function SelectTrigger({ //SelectTriger component that is responsible for the function of the input.
   className,
   size = "default",
   children,

@@ -9,7 +9,22 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input"; // Importing the Input component from the UI library for use in the form input fields.
 
-export function EventCard() { // Input that is similar to the attendance Input for employees
+export function EventCard({ onAddEvent }) { // Input that is similar to the attendance Input for employees
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        onAddEvent?.({
+            name: formData.get("eventName"),
+            venue: formData.get("venue"),
+            start: formData.get("eventStart"),
+            ended: formData.get("eventEnded"),
+        });
+
+        event.currentTarget.reset();
+    }
+
     return (
         <Card className="w-full max-w-md border-0 bg-white/95 shadow-2xl">
             <CardHeader className="pb-3 text-center">
@@ -18,7 +33,7 @@ export function EventCard() { // Input that is similar to the attendance Input f
                     Enter the details for the event
                 </CardDescription>
             </CardHeader>
-            <form onSubmit={(event) => event.preventDefault()}>
+            <form onSubmit={handleSubmit}>
                 <CardContent>
                     <div className="flex flex-col gap-4">
                         <div className="grid gap-2">
@@ -28,6 +43,7 @@ export function EventCard() { // Input that is similar to the attendance Input f
                             <Input
                                 className="h-10"
                                 id="event-name"
+                                name="eventName"
                                 type="text"
                                 placeholder="Enter event name"
                                 required
@@ -40,6 +56,7 @@ export function EventCard() { // Input that is similar to the attendance Input f
                             <Input
                                 className="h-10"
                                 id="venue"
+                                name="venue"
                                 type="text"
                                 placeholder="Enter event venue"
                                 required
@@ -52,6 +69,7 @@ export function EventCard() { // Input that is similar to the attendance Input f
                             <Input
                                 className="h-10"
                                 id="event-start"
+                                name="eventStart"
                                 type="datetime-local"
                                 required
                             />
@@ -63,6 +81,7 @@ export function EventCard() { // Input that is similar to the attendance Input f
                             <Input
                                 className="h-10"
                                 id="event-ended"
+                                name="eventEnded"
                                 type="datetime-local"
                                 required
                             />

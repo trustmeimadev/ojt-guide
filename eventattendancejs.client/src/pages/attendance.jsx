@@ -1,6 +1,6 @@
 import PageShell from "@/components/page-shell"; //Navigation
 import { AttendanceCard } from "@/components/attendance-card"; //   Attendance Card for inputtin the Employee ID and the Selection of which event they attended
-import { useState } from "react";
+import { usePersistedState } from "@/hooks/use-persisted-state";
 import {
     Table,
     TableBody,
@@ -12,7 +12,10 @@ import {
 } from "@/components/ui/table";
 
 export default function AttendancePage() {
-    const [attendanceRecords, setAttendanceRecords] = useState([]);
+    const [attendanceRecords, setAttendanceRecords] = usePersistedState(
+        "attendance-records",
+        []
+    );
 
     function addAttendance(record) {
         setAttendanceRecords((records) => [
