@@ -1,20 +1,54 @@
-﻿.brand-logo {
+﻿/* Sidebar logo sizing and alignment. */
+.brand-logo {
     display: block;
-    width: 120px;
+    width: 150px;
     max-width: 100%;
-    max-height: 56px;
+    max-height: 88px;
     height: auto;
     object-fit: contain;
 }
-
+/* Brand container styling for the sidebar. */
 .brand {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 64px;
+    min-height: 112px;
     padding: 0.5rem;
 }
 
+/* Sidebar navigation spacing and typography. */
+.app-sidebar-menu {
+    gap: 0.25rem;
+}
+/* Icon-only collapsed sidebar layout. */
+.app-sidebar-menu [data-slot="sidebar-menu-button"] {
+    min-height: 2.5rem;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Icon-only collapsed sidebar layout. */
+.group[data-collapsible="icon"] .brand {
+    min-height: 64px;
+    padding: 0.75rem 0.25rem;
+}
+/* Icon-only collapsed sidebar layout. */
+.group[data-collapsible="icon"] .brand-logo {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+/* Icon-only collapsed sidebar layout. */
+.group[data-collapsible="icon"] .app-sidebar-menu a {
+    justify-content: center;
+}
+
+.group[data-collapsible="icon"] .app-sidebar-menu span {
+    display: none;
+}
+
+/* Forest-green page background with a subtle dotted pattern. */
 .page-background {
     background-color: oklch(39.3% 0.095 152.535);
     background-image:
@@ -22,12 +56,14 @@
         linear-gradient(135deg, oklch(46% 0.12 152.535), oklch(32% 0.08 152.535));
     background-size: 24px 24px, 100% 100%;
 }
+/* Full-page layout reset for the routed application. */
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    text-align: center;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    text-align: left;
 }
-
+/* Table cell padding. */
 th, td {
     padding-left: 1rem;
     padding-right: 1rem;

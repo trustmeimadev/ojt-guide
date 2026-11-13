@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Button from components to be able to submit the employee into the table
 import {
     Card,
     CardContent,
@@ -7,18 +7,37 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"; // Input Ui for the button
 
-export function CardDemo() {
-    return (
-        <Card className="mx-auto w-full max-w-md border-0 bg-white/95 shadow-2xl">
+export function AttendanceCard({ onAddAttendance }) { // The layout for the attendance
+    function handleSubmit(event) { // Handle the attendance button to insert new employee into the table
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const eventSelect = event.currentTarget.elements.event;
+
+        onAddAttendance?.({
+            employeeId: formData.get("employeeId"),
+            event: eventSelect.options[eventSelect.selectedIndex].text,
+            date: new Intl.DateTimeFormat("en-US", {
+                dateStyle: "medium",
+                timeStyle: "short",
+            }).format(new Date()),
+            status: "Present",
+        });
+
+        event.currentTarget.reset();
+    }
+
+    return ( // The layout for the attendance card
+        <Card className="w-full max-w-md border-0 bg-white/95 shadow-2xl">
             <CardHeader className="pb-3 text-center">
-                <CardTitle className="text-2xl font-bold">Attendance</CardTitle>
+                <CardTitle className="text-2xl font-bold">Attendance Management</CardTitle>
                 <CardDescription className="text-base">
                     Enter the employee details to record attendance
                 </CardDescription>
             </CardHeader>
-            <form onSubmit={(event) => event.preventDefault()}>
+            <form onSubmit={handleSubmit}>
                 <CardContent className="space-y-1">
                     <div className="flex flex-col gap-4">
                         <div className="grid gap-2">
@@ -28,32 +47,9 @@ export function CardDemo() {
                             <Input
                                 className="h-10"
                                 id="employee-id"
+                                name="employeeId"
                                 type="text"
                                 placeholder="Enter employee ID"
-                                required
-                            />
-                        </div>
-                        <div className="grid gap-2">
-                            <label className="text-left text-sm font-medium" htmlFor="employee-name">
-                                Name
-                            </label>
-                            <Input
-                                className="h-10"
-                                id="employee-name"
-                                type="text"
-                                placeholder="Enter employee name"
-                                required
-                            />
-                        </div>
-                        <div className="grid gap-2">
-                            <label className="text-left text-sm font-medium" htmlFor="employee-level">
-                                Level
-                            </label>
-                            <Input
-                                className="h-10"
-                                id="employee-level"
-                                type="text"
-                                placeholder="e.g. Officer"
                                 required
                             />
                         </div>
@@ -63,6 +59,7 @@ export function CardDemo() {
                             </label>
                             <select
                                 id="event"
+                                name="event"
                                 defaultValue=""
                                 className="h-10 w-full rounded-lg border border-input bg-white px-2.5 py-1 text-left text-base text-gray-900 outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"
                                 required

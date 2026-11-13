@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+// App-level layout and sidebar styles.
+import './App.css'
 import { RouterProvider } from "react-router/dom";
 import { router } from "@/router";
 // import App from './App.jsx'

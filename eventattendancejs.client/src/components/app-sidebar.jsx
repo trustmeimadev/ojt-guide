@@ -1,14 +1,15 @@
-import {
+import { // Importing necessary icons from the lucide-react library for use in the sidebar navigation.
     CalendarDays,
     Users,
     Settings,
     Home,
+    UserRoundGroup,
 } from "lucide-react";
 
 import { Link, useLocation } from "react-router";
 
 
-import {
+import { // Sidebar components imported from the UI library for building the sidebar structure and functionality.
     SidebarHeader,
     Sidebar,
     SidebarContent,
@@ -28,7 +29,7 @@ const items = [
     {
         title: "Attendance",
         url: "/attendance",
-        icon: CalendarDays,
+        icon: UserRoundGroup,
         // page: "attendance",
     },
     {
@@ -56,7 +57,7 @@ export function AppSidebar() { // {AppSidebar({ currentPage, setCurrentPage }) {
     const pathname = useLocation().pathname;
     // const {setOpenMobile} = useSidebar();
     return (
-        <Sidebar>
+        <Sidebar collapsible="icon">
             <SidebarHeader>
                 <header id="">
                     <div className="brand">
@@ -82,7 +83,8 @@ export function AppSidebar() { // {AppSidebar({ currentPage, setCurrentPage }) {
                         </SidebarMenuItem>
                     ))}
                 </SidebarMenu> */}
-                <SidebarMenu>
+                {/* Sidebar navigation: each item maps to a route and highlights the current page. */}
+                <SidebarMenu className="app-sidebar-menu">
                     {items.map((item) => {
                         const isActive =
                             item.url === "/" ? pathname === "/" : pathname.startsWith(item.url);
@@ -90,7 +92,8 @@ export function AppSidebar() { // {AppSidebar({ currentPage, setCurrentPage }) {
                         return (
                             <SidebarMenuItem key={item.url}>
                                 <SidebarMenuButton asChild isActive={isActive}>
-                                    <Link to={item.url}>
+                                    {/* Keep the icon and label on the same horizontal row. */}
+                                    <Link to={item.url} className="flex w-full items-center gap-2">
                                         <item.icon />
                                         <span>{item.title}</span>
                                     </Link>
