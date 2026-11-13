@@ -14,8 +14,8 @@ export default function AppLayout() { //Dashboard layout with sidebar and routed
             <SidebarInset>
                 {/* Sidebar toggle and current page title. */}
                 <header className="flex h-16 items-center gap-3 border-b px-4">
-                    <SidebarTrigger />
-                    <h1 className="text-lg font-semibold">
+                    <SidebarTrigger className="size-10 [&_svg]:size-6" />
+                    <h1 className="min-w-max whitespace-nowrap text-2xl font-bold tracking-wide text-yellow-300">
                         Event Attendance System
                     </h1>
                 </header>

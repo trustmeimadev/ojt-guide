@@ -1,12 +1,12 @@
 "use client";
-import * as React from "react"
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva } from "class-variance-authority";
-import { cn } from "cn"
+import * as React from "react" // Importing React to use its features and hooks in this component.
+import { mergeProps } from "@base-ui/react/merge-props" // Importing the mergeProps utility to combine multiple sets of props into a single object, allowing for easier management of component properties.
+import { useRender } from "@base-ui/react/use-render" // Importing the useRender hook to manage rendering logic and state for components, enabling conditional rendering and dynamic updates based on state changes. 
+import { cva } from "class-variance-authority"; // Importing the cva utility to create class variance authority, which allows for defining and managing CSS class variations based on component state and props, enabling more flexible and maintainable styling.
+import { cn } from "cn" // Importing the cn utility to conditionally combine class names based on component state and props, allowing for dynamic styling and easier management of CSS classes in React components.
 
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button" // Importing Each component from the UI library for use in the sidebar trigger and other button elements within the sidebar.
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -24,14 +24,14 @@ import {
 } from "@/components/ui/tooltip"
 import { PanelLeftOpen } from "lucide-react"
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state"
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "16rem"
-const SIDEBAR_WIDTH_MOBILE = "18rem"
-const SIDEBAR_WIDTH_ICON = "3rem"
-const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+const SIDEBAR_COOKIE_NAME = "sidebar_state" // The name of the cookie used to store the sidebar state (expanded or collapsed) for persistence across sessions and page reloads.
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // The maximum age of the sidebar state cookie in seconds (7 days), after which the cookie will expire and the sidebar state will be reset to its default value.
+const SIDEBAR_WIDTH = "16rem" // The width of the sidebar when it is expanded, defined in rem units for responsive sizing and consistent layout across different screen sizes.
+const SIDEBAR_WIDTH_MOBILE = "18rem" // The width of the sidebar on mobile devices, defined in rem units.
+const SIDEBAR_WIDTH_ICON = "3rem" // The width of the sidebar when it is in icon mode, defined in rem units.
+const SIDEBAR_KEYBOARD_SHORTCUT = "b" // The keyboard shortcut to toggle the sidebar.
 
-const SidebarContext = React.createContext(null)
+const SidebarContext = React.createContext(null) // Creating a React context to manage the state and behavior of the sidebar, allowing components within the sidebar to access and modify its state (e.g., open/closed) without prop drilling.
 
 function useSidebar() {
   const context = React.useContext(SidebarContext)
