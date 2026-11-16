@@ -7,7 +7,7 @@ export default function PageShell({
 }) {
     return (
         <div className="p-8  mb-5">
-            <h1 className="text-3xl font-bold mb-6">
+            <h1 className="mb-6 text-3xl font-bold text-yellow-300">
                 {title}
             </h1>
 

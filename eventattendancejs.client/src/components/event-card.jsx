@@ -26,7 +26,7 @@ export function EventCard({ onAddEvent }) { // Input that is similar to the atte
     }
 
     return (
-        <Card className="w-full max-w-md border-0 bg-white/95 shadow-2xl">
+        <Card className="w-full max-w-md border-0 bg-white/95 shadow-2xl lg:w-80 lg:max-w-none lg:flex-none">
             <CardHeader className="pb-3 text-center">
                 <CardTitle className="text-2xl font-bold">Event Management</CardTitle>
                 <CardDescription className="text-base">

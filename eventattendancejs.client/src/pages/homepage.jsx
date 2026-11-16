@@ -21,8 +21,8 @@ function formatDateTime(value) { // A utility function to format date and time v
 
 function DashboardTable({ headers, rows }) { // Combined table for displaying attendance and event records on the homepage.
     return (
-        <div className="w-full overflow-hidden rounded-xl bg-white/95 p-4 shadow-2xl">
-            <Table className="text-black" style={{ color: "#000000" }}>
+        <div className="dashboard-table w-full overflow-hidden rounded-xl bg-white/95 p-3 shadow-2xl">
+            <Table className="text-xs text-black" style={{ color: "#000000" }}>
                 <TableCaption>Attendance and event records</TableCaption>
                 <TableHeader>
                     <TableRow>
@@ -69,33 +69,53 @@ export default function HomePage() { // The layout for the homepage
     const [attendanceRecords] = usePersistedState("attendance-records", []);
     const [events] = usePersistedState("event-records", []);
 
-    const attendanceRows = attendanceRecords.map((record) => ({
-        id: record.id,
-        cells: [
-            record.employeeId,
-            record.event,
-            "—",
-            record.date,
-            record.status,
-            "—",
-            "—",
-        ],
-    }));
-
-    const eventRows = events.map((event) => ({
-        id: event.id,
-        cells: [
-            "—",
+    const eventRows = events.flatMap((event) => {
+        const attendees = event.attendees ?? [];
+        const eventDetails = [
+            event.id,
             event.name,
             event.venue,
-            "—",
-            "—",
-            formatDateTime(event.start), // Format the event start and end times for display in the table.
-            formatDateTime(event.ended), // Format the event start and end times for display in the table.
-        ],
-    }));
+            formatDateTime(event.start),
+            formatDateTime(event.ended),
+            formatDateTime(event.dateCreated),
+        ];
 
-    const combinedRows = [...attendanceRows, ...eventRows];
+        if (attendees.length === 0) {
+            return [{
+                id: event.id,
+                cells: ["—", "—", "—", eventDetails[0], eventDetails[1], eventDetails[2], "—", "—", eventDetails[3], eventDetails[4], eventDetails[5]],
+            }];
+        }
+
+        return attendees.map((attendee) => ({
+            id: `${event.id}-${attendee.id}`,
+            cells: [
+                attendee.employeeId,
+                attendee.name,
+                attendee.level,
+                eventDetails[0],
+                eventDetails[1],
+                eventDetails[2],
+                attendee.timestamp,
+                attendee.status,
+                eventDetails[3],
+                eventDetails[4],
+                eventDetails[5],
+            ],
+        }));
+    });
+
+    const linkedAttendanceIds = new Set(
+        events.flatMap((event) => (event.attendees ?? []).map((attendee) => attendee.id))
+    );
+    const orphanAttendanceRows = attendanceRecords
+        .filter((record) => !linkedAttendanceIds.has(record.id))
+        .map((record) => ({
+            id: record.id,
+            cells: [record.employeeId, record.name ?? "—", record.level ?? "—", record.eventId ?? "—", record.event, record.venue ?? "—", record.date, record.status, "—", "—", "—"],
+        }));
+
+    const combinedRows = [...eventRows, ...orphanAttendanceRows];
 
     return (
         <PageShell title="Dashboard">
@@ -103,12 +123,16 @@ export default function HomePage() { // The layout for the homepage
                 <DashboardTable
                     headers={[
                         "Employee ID",
+                        "Name",
+                        "Employee Level",
+                        "Event ID",
                         "Event Name",
                         "Venue",
-                        "Attendance Date",
+                        "Timestamp",
                         "Status",
                         "Event Start",
                         "Event Ended",
+                        "Date Created",
                     ]}
                     rows={combinedRows}
                 />

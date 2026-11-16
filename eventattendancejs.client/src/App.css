@@ -7,6 +7,30 @@
     height: auto;
     object-fit: contain;
 }
+
+/* Compact Event table layout for the form-and-table page view. */
+.event-table table {
+    table-layout: fixed;
+}
+
+.event-table th,
+.event-table td {
+    padding: 0.5rem 0.35rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Compact Dashboard table columns so all joined event and attendance data fits the page. */
+.dashboard-table table {
+    table-layout: fixed;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 0.5rem 0.35rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
 /* Brand container styling for the sidebar. */
 .brand {
     display: flex;
