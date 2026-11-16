@@ -62,7 +62,7 @@ function DashboardTable({ headers, rows, onClearLogs }) { // Combined table for 
                     )}
                 </TableBody>
             </Table>
-            <div className="flex justify-start border-t border-sidebar-border bg-sidebar p-3">
+            <div className="flex justify-end border-t border-sidebar-border bg-sidebar p-3">
                 <Button
                     type="button"
                     variant="destructive"
@@ -132,14 +132,14 @@ export default function HomePage() { // The layout for the homepage
         .filter((record) => !linkedAttendanceIds.has(record.id))
         .map((record) => ({
             id: record.id,
-            cells: [record.employeeId, record.name ?? "—", record.level ?? "—", record.eventId ?? "—", record.event, record.venue ?? "—", record.date, record.status, "—", "—"],
+            cells: [record.employeeId, record.name ?? "—", record.level ?? "—", record.eventId ?? "—", record.event, record.venue ?? "—", record.date, record.status, "—", "—"], // This maps orphan attendance records to rows in the table, filling in missing event details with placeholders.
         }));
 
     const combinedRows = [...eventRows, ...orphanAttendanceRows];
 
     return (
         <PageShell title="Dashboard">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6"> {/* This div contains the DashboardTable component, which displays the combined attendance and event records in a table format. */}
 I                 <DashboardTable
                     headers={[
                         "Employee ID",
