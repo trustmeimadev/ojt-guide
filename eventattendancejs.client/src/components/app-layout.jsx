@@ -13,14 +13,14 @@ export default function AppLayout() { //Dashboard layout with sidebar and routed
 
             <SidebarInset>
                 {/* Sidebar toggle and current page title. */}
-                <header className="flex h-16 items-center gap-3 border-b bg-sidebar px-4"> {/* This changes the background color of the header */}
-                    <SidebarTrigger className="size-10 [&_svg]:size-6" />
-                    <h1 className="min-w-max whitespace-nowrap text-2xl font-bold tracking-wide text-yellow-300">
+                <header className="flex h-20 items-center gap-4 border-b bg-sidebar px-6"> {/* This changes the background color of the header */}
+                    <SidebarTrigger className="size-14 text-yellow-300 [&_svg]:size-9" />
+                    <h1 className="min-w-max whitespace-nowrap text-3xl font-extrabold tracking-wide text-yellow-300 drop-shadow-sm">
                         Event Attendance System
                     </h1>
                 </header>
 
-                <main className="flex-1 p-4">
+                <main className="page-background min-h-[calc(100vh-5rem)] flex-1 p-4">
                   
                     <Outlet />
                 </main>

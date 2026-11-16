@@ -80,6 +80,11 @@
         linear-gradient(135deg, oklch(46% 0.12 152.535), oklch(32% 0.08 152.535));
     background-size: 24px 24px, 100% 100%;
 }
+
+/* Keep the page shell transparent so the shared patterned background remains visible. */
+.page-shell {
+    background: transparent;
+}
 /* Full-page layout reset for the routed application. */
 #root {
     width: 100%;

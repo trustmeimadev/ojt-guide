@@ -1,5 +1,6 @@
 import PageShell from "@/components/page-shell"; // Importing the PageShell component to provide a consistent layout for the homepage.
 import { usePersistedState } from "@/hooks/use-persisted-state"; // Custom hook to persist state in localStorage and synchronize across tabs.
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -19,7 +20,7 @@ function formatDateTime(value) { // A utility function to format date and time v
     }).format(new Date(value));
 }
 
-function DashboardTable({ headers, rows }) { // Combined table for displaying attendance and event records on the homepage.
+function DashboardTable({ headers, rows, onClearLogs }) { // Combined table for displaying attendance and event records on the homepage.
     return (
         <div className="dashboard-table w-full overflow-hidden rounded-xl bg-white/95 p-3 shadow-2xl">
             <Table className="text-xs text-black" style={{ color: "#000000" }}>
@@ -61,13 +62,34 @@ function DashboardTable({ headers, rows }) { // Combined table for displaying at
                     )}
                 </TableBody>
             </Table>
+            <div className="flex justify-start border-t border-sidebar-border bg-sidebar p-3">
+                <Button
+                    type="button"
+                    variant="destructive"
+                    size="lg"
+                    className="bg-red-600 px-5 font-bold text-white shadow-lg hover:bg-red-700"
+                    style={{ backgroundColor: "#dc2626", color: "#ffffff" }}
+                    onClick={onClearLogs}
+                >
+                    Clear Logs
+                </Button>
+            </div>
         </div>
     );
 }
 
 export default function HomePage() { // The layout for the homepage
-    const [attendanceRecords] = usePersistedState("attendance-records", []);
-    const [events] = usePersistedState("event-records", []);
+    const [attendanceRecords, setAttendanceRecords] = usePersistedState("attendance-records", []);
+    const [events, setEvents] = usePersistedState("event-records", []);
+
+    function clearLogs() {
+        if (!window.confirm("Clear all attendance logs?")) return;
+
+        setAttendanceRecords([]);
+        setEvents((currentEvents) =>
+            currentEvents.map((event) => ({ ...event, attendees: [] }))
+        );
+    }
 
     const eventRows = events.flatMap((event) => {
         const attendees = event.attendees ?? [];
@@ -77,17 +99,16 @@ export default function HomePage() { // The layout for the homepage
             event.venue,
             formatDateTime(event.start),
             formatDateTime(event.ended),
-            formatDateTime(event.dateCreated),
         ];
 
         if (attendees.length === 0) {
             return [{
                 id: event.id,
-                cells: ["—", "—", "—", eventDetails[0], eventDetails[1], eventDetails[2], "—", "—", eventDetails[3], eventDetails[4], eventDetails[5]],
+                 cells: ["—", "—", "—", eventDetails[0], eventDetails[1], eventDetails[2], "—", "—", eventDetails[3], eventDetails[4]],
             }];
         }
 
-        return attendees.map((attendee) => ({
+        return attendees.map((attendee) => ({ // This maps each attendee to a row in the table, combining their details with the event details.
             id: `${event.id}-${attendee.id}`,
             cells: [
                 attendee.employeeId,
@@ -100,7 +121,6 @@ export default function HomePage() { // The layout for the homepage
                 attendee.status,
                 eventDetails[3],
                 eventDetails[4],
-                eventDetails[5],
             ],
         }));
     });
@@ -112,7 +132,7 @@ export default function HomePage() { // The layout for the homepage
         .filter((record) => !linkedAttendanceIds.has(record.id))
         .map((record) => ({
             id: record.id,
-            cells: [record.employeeId, record.name ?? "—", record.level ?? "—", record.eventId ?? "—", record.event, record.venue ?? "—", record.date, record.status, "—", "—", "—"],
+            cells: [record.employeeId, record.name ?? "—", record.level ?? "—", record.eventId ?? "—", record.event, record.venue ?? "—", record.date, record.status, "—", "—"],
         }));
 
     const combinedRows = [...eventRows, ...orphanAttendanceRows];
@@ -120,7 +140,7 @@ export default function HomePage() { // The layout for the homepage
     return (
         <PageShell title="Dashboard">
             <div className="flex flex-col gap-6">
-                <DashboardTable
+I                 <DashboardTable
                     headers={[
                         "Employee ID",
                         "Name",
@@ -132,9 +152,9 @@ export default function HomePage() { // The layout for the homepage
                         "Status",
                         "Event Start",
                         "Event Ended",
-                        "Date Created",
                     ]}
                     rows={combinedRows}
+                    onClearLogs={clearLogs}
                 />
             </div>
         </PageShell>

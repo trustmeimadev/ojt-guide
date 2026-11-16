@@ -1,7 +1,6 @@
 import { // Importing necessary icons from the lucide-react library for use in the sidebar navigation.
     CalendarDays,
     Users,
-    Settings,
     Home,
     UserRoundGroup,
 } from "lucide-react";
@@ -43,12 +42,6 @@ const items = [
         url: "/employees",
         icon: Users,
         // page: "employees",
-    },
-    {
-        title: "Settings",
-        url: "/settings",
-        icon: Settings,
-        // page: "settings",
     },
 ];
 
