@@ -14,7 +14,6 @@ public class DatabaseService
                 "DatabaseMSSql connection string was not found."
             );
 
-        Console.WriteLine($"Database connection string: {_connectionString}");
     }
 
     public async Task<object> GetDatabaseStatusAsync()

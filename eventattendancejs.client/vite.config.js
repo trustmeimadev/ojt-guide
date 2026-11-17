@@ -36,8 +36,8 @@ import tailwindcss from '@tailwindcss/vite';
 //     }
 // }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https:localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https:localhost:7238';
+const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
+    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7238';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -49,6 +49,10 @@ export default defineConfig({
     },
     server: {
         proxy: {
+            '^/api': {
+                target,
+                secure: false
+            },
             '^/weatherforecast': {
                 target,
                 secure: false

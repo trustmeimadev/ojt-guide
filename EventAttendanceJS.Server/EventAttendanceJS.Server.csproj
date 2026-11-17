@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <SpaRoot>..\eventattendancejs.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
-    <SpaProxyServerUrl>https://localhost:63374</SpaProxyServerUrl>
+    <SpaProxyServerUrl>http://localhost:63374</SpaProxyServerUrl>
     <UserSecretsId>0a94df0b-6f4c-4f33-ba75-4c6385da342f</UserSecretsId>
   </PropertyGroup>
 
