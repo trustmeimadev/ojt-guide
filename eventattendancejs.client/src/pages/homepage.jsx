@@ -2,6 +2,17 @@ import PageShell from "@/components/page-shell"; // Importing the PageShell comp
 import { usePersistedState } from "@/hooks/use-persisted-state"; // Custom hook to persist state in localStorage and synchronize across tabs.
 import { Button } from "@/components/ui/button";
 import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
     Table,
     TableBody,
     TableCaption,
@@ -63,16 +74,38 @@ function DashboardTable({ headers, rows, onClearLogs }) { // Combined table for 
                 </TableBody>
             </Table>
             <div className="flex justify-end border-t border-sidebar-border bg-sidebar p-3">
-                <Button
-                    type="button"
-                    variant="destructive"
-                    size="lg"
-                    className="bg-red-600 px-5 font-bold text-white shadow-lg hover:bg-red-700"
-                    style={{ backgroundColor: "#dc2626", color: "#ffffff" }}
-                    onClick={onClearLogs}
-                >
-                    Clear Logs
-                </Button>
+                <AlertDialog>
+                    <AlertDialogTrigger
+                        render={
+                            <Button
+                                type="button"
+                                variant="default"
+                                size="lg"
+                                className="bg-sidebar px-5 font-bold text-white shadow-lg hover:bg-sidebar/80"
+                                style={{ backgroundColor: "var(--sidebar)", color: "#ffffff" }}
+                            />
+                        }
+                    >
+                        Clear Logs
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Clear attendance logs?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This will remove all attendance logs and attendee links from the dashboard.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                className="bg-red-600 text-white hover:bg-red-700"
+                                onClick={onClearLogs}
+                            >
+                                Clear Logs
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </div>
     );
@@ -83,8 +116,6 @@ export default function HomePage() { // The layout for the homepage
     const [events, setEvents] = usePersistedState("event-records", []);
 
     function clearLogs() {
-        if (!window.confirm("Clear all attendance logs?")) return;
-
         setAttendanceRecords([]);
         setEvents((currentEvents) =>
             currentEvents.map((event) => ({ ...event, attendees: [] }))
@@ -140,7 +171,7 @@ export default function HomePage() { // The layout for the homepage
     return (
         <PageShell title="Dashboard">
             <div className="flex flex-col gap-6"> {/* This div contains the DashboardTable component, which displays the combined attendance and event records in a table format. */}
-I                 <DashboardTable
+                <DashboardTable
                     headers={[
                         "Employee ID",
                         "Name",

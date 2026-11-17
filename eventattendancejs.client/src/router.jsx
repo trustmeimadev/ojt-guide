@@ -4,6 +4,7 @@ import HomePage from "@/pages/homepage"; // Importing the HomePage component for
 import EventPage from "@/pages/events"; // Importing the EventPage component for the events route
 import EmployeesPage from "@/pages/employees"; // Importing the EmployeesPage component for the employees route
 import AttendancePage from "@/pages/attendance"; // Importing the AttendancePage component for the attendance route
+import DBStatus from "./pages/db-status";
 
 export const router = createBrowserRouter([ // Creating a router instance using createBrowserRouter with route configurations
     {
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([ // Creating a router instance using 
             { path: "/events", element: <EventPage /> },
             { path: "/employees", element: <EmployeesPage /> },
             { path: "/attendance", element: <AttendancePage /> },
+            { path: "/db-status", element: <DBStatus /> },
         ],
     },
 ]);

@@ -1,4 +1,4 @@
-import PageShell from "@/components/page-shell"; //Navigation
+import PageShell from "@/components/page-shell"; // Navigation
 import { AttendanceCard } from "@/components/attendance-card"; //   Attendance Card for inputtin the Employee ID and the Selection of which event they attended
 import { Button } from "@/components/ui/button";
 import { usePersistedState } from "@/hooks/use-persisted-state";
@@ -75,7 +75,6 @@ export default function AttendancePage() {
                         </Button>
                         <Button
                             type="button"
-                            variant="destructive"
                             className="bg-red-600 text-white hover:bg-red-700"
                         >
                             Delete Log
